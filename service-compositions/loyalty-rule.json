@@ -1,0 +1,96 @@
+{
+    "composition": {
+        "type": "let",
+        "declarations": {
+            "params": null
+        },
+        "components": [
+            {
+                "type": "finally",
+                "body": {
+                    "type": "function",
+                    "function": {
+                        "exec": {
+                            "kind": "nodejs:default",
+                            "code": "args => { params = args }"
+                        }
+                    }
+                },
+                "finalizer": {
+                    "type": "if_nosave",
+                    "test": {
+                        "type": "mask",
+                        "components": [
+                            {
+                                "type": "action",
+                                "name": "/guest/loyalty-service",
+                                "path": ".test"
+                            }
+                        ]
+                    },
+                    "consequent": {
+                        "type": "finally",
+                        "body": {
+                            "type": "function",
+                            "function": {
+                                "exec": {
+                                    "kind": "nodejs:default",
+                                    "code": "() => params"
+                                }
+                            }
+                        },
+                        "finalizer": {
+                            "type": "mask",
+                            "components": [
+                                {
+                                    "type": "action",
+                                    "name": "/guest/notification-service",
+                                    "path": ".consequent"
+                                }
+                            ]
+                        }
+                    },
+                    "alternate": {
+                        "type": "finally",
+                        "body": {
+                            "type": "function",
+                            "function": {
+                                "exec": {
+                                    "kind": "nodejs:default",
+                                    "code": "() => params"
+                                }
+                            }
+                        },
+                        "finalizer": {
+                            "type": "mask",
+                            "components": [
+                                {
+                                    "type": "action",
+                                    "name": "/whisk.system/utils/echo",
+                                    "path": ".alternate"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "path": ""
+    },
+    "ast": {
+        "type": "if",
+        "test": {
+            "type": "action",
+            "name": "/guest/loyalty-service"
+        },
+        "consequent": {
+            "type": "action",
+            "name": "/guest/notification-service"
+        },
+        "alternate": {
+            "type": "action",
+            "name": "/whisk.system/utils/echo"
+        }
+    },
+    "version": "0.8.1"
+}

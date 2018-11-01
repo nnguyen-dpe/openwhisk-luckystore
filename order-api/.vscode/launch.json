@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask (linux/osx)",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "program": "/usr/local/bin/sls",
+            "args": [
+                "wsgi",
+                "serve",
+            ],
+            "debugOptions": [
+                "RedirectOutput"
+            ]
+        }
+    ]
+}
